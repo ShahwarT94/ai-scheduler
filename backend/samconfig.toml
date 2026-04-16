@@ -1,0 +1,38 @@
+version = 0.1
+
+# ── Default environment ────────────────────────────────────────────────────────
+# Used when you run: sam build / sam deploy (no --config-env flag)
+
+[default.global.parameters]
+stack_name = "ai-scheduler-prod"
+region = "us-east-1"
+
+[default.build.parameters]
+cached   = true   # only rebuild functions whose source changed
+parallel = true   # build all functions in parallel
+
+[default.deploy.parameters]
+capabilities      = "CAPABILITY_IAM"
+confirm_changeset = true    # show a diff and ask for confirmation before deploying
+resolve_s3        = true    # SAM auto-creates and manages the artifact S3 bucket
+# parameter_overrides is intentionally omitted here — pass secrets on the CLI
+# to avoid storing them in this file (which may be committed to git).
+
+# ── Dev environment ────────────────────────────────────────────────────────────
+# Used when you run: sam deploy --config-env dev
+s3_prefix = "ai-scheduler-prod"
+parameter_overrides = "Stage=\"prod\" CoachId=\"coach-001\" TwilioPhoneNumber=\"+17753477954\" WebhookUrl=\"https://fabwj4hz0g.execute-api.us-east-1.amazonaws.com/prod/webhook/sms\" FrontendOrigin=\"*\" SkipTwilioValidation=\"true\""
+image_repositories = []
+
+[dev.global.parameters]
+stack_name = "ai-scheduler-dev"
+
+[dev.build.parameters]
+cached   = true
+parallel = true
+
+[dev.deploy.parameters]
+capabilities      = "CAPABILITY_IAM"
+confirm_changeset = false   # faster iteration in dev
+resolve_s3        = true
+region            = "us-east-1"

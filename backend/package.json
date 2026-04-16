@@ -1,0 +1,27 @@
+{
+  "name": "ai-scheduler-backend",
+  "version": "1.0.0",
+  "description": "AI Appointment Scheduler - Lambda Backend",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "bundle": "node scripts/bundle.js",
+    "lint": "eslint 'functions/**/*.ts' 'lib/**/*.ts'",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@aws-sdk/client-dynamodb": "^3.540.0",
+    "@aws-sdk/lib-dynamodb": "^3.540.0",
+    "twilio": "^5.3.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.136",
+    "@types/node": "^20.11.30",
+    "@types/uuid": "^9.0.8",
+    "esbuild": "^0.25.12",
+    "typescript": "^5.4.3"
+  }
+}
