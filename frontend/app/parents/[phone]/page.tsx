@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { getBookings } from "@/lib/api";
 import type { Booking, Message } from "@/lib/types";
 import { formatShortDate, formatTime, formatTimestamp } from "@/lib/utils";
@@ -12,7 +12,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { EmptyState } from "@/components/ui/EmptyState";
 
 interface PageProps {
-  params: { phone: string };
+  params: Promise<{ phone: string }>;
 }
 
 // ─── Skeleton layouts ─────────────────────────────────────────────────────────
@@ -48,7 +48,8 @@ function BookingListSkeleton() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function ParentDetailPage({ params }: PageProps) {
-  const phone = decodeURIComponent(params.phone);
+  const { phone: rawPhone } = use(params);
+  const phone = decodeURIComponent(rawPhone);
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
